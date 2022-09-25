@@ -17,7 +17,7 @@ from litedram.phy.dfi import *
 # Generic SDR PHY ----------------------------------------------------------------------------------
 
 class GENSDRPHY(Module):
-    def __init__(self, pads, sys_clk_freq=100e6, cl=None):
+    def __init__(self, pads, sys_clk_freq=100e6, cl=None, **kwargs):
         pads        = PHYPadsCombiner(pads)
         addressbits = len(pads.a)
         bankbits    = len(pads.ba)
@@ -79,7 +79,8 @@ class GENSDRPHY(Module):
                 io = pads.dq[i],
                 o  = dfi.p0.wrdata[i],
                 oe = dfi.p0.wrdata_en,
-                i  = dfi.p0.rddata[i],
+                i  = dfi.p0.rddata[i], 
+                **kwargs
             )
         if hasattr(pads, "dm"):
             for i in range(len(pads.dm)):
